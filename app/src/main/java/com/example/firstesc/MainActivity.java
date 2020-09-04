@@ -13,6 +13,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Message;
 import android.telephony.PhoneNumberUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -67,6 +68,10 @@ public class MainActivity extends AppCompatActivity {
         if(requestCode == 1001){
             if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED){
                 Toast.makeText(this, "권한 허용 됨", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, "권한 허용이 필요합니다.", Toast.LENGTH_SHORT).show();
+                Log.d("PermissionDenied", "권한이 거부되어 앱을 종료함");
+                finish();
             }
         }
     }
@@ -89,8 +94,8 @@ public class MainActivity extends AppCompatActivity {
         addContact.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                 // TODO : 연락처 추가
-                Toast.makeText(MainActivity.this, "text",Toast.LENGTH_SHORT).show();
+                 Intent addIntent = new Intent(MainActivity.this, AddEditActivity.class);
+                 startActivity(addIntent);
             }
         });
 
@@ -98,6 +103,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // TODO : 연락처
+                Intent contactIntent = new Intent(MainActivity.this, ContactActivity.class);
+                startActivity(contactIntent);
             }
         });
 
