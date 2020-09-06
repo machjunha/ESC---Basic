@@ -47,6 +47,14 @@ public class ContactActivity extends AppCompatActivity {
 
         setInfo(currentPage);
     }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+
+        setInfo(currentPage);
+    }
+
     private void setUpUI() {
         toolbar = findViewById(R.id.contact_toolbar);
         avatar = findViewById(R.id.contact_iv_avatar);
@@ -104,6 +112,7 @@ public class ContactActivity extends AppCompatActivity {
             case android.R.id.home:
                 finish();
                 break;
+
             case R.id.menu_contact_call :
                 Intent callIntent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + phone.getText()));
                 startActivity(callIntent);
@@ -111,6 +120,11 @@ public class ContactActivity extends AppCompatActivity {
 
             case R.id.menu_contact_edit :
                 //TODO : 수정
+                Intent editIntent = new Intent(ContactActivity.this, AddEditActivity.class);
+                editIntent.putExtra("phone_num", phone.getText().toString());
+                editIntent.putExtra("position", currentPage);
+                startActivity(editIntent);
+
                 break;
 
             case R.id.menu_contact_message:
